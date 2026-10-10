@@ -1,0 +1,4 @@
+# dsh-serial 的安装声明：把插件插入到 profile 的插件层。
+- insert:
+    - id: dsh-serial
+      name: 'dsh-serial'

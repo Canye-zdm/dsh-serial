@@ -1,0 +1,65 @@
+{
+  "name": "dsh-serial",
+  "version": "0.1.6",
+  "description": "把电脑串口接进 dsh——让 AI 能看见 Arduino/STM32/ESP32 的运行时输出（悬浮球面板 + serial_list_ports / serial_read 两个工具）",
+  "type": "module",
+  "main": "lib/index.js",
+  "license": "MIT",
+  "author": "Canye-zdm",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Canye-zdm/dsh-serial.git"
+  },
+  "homepage": "https://github.com/Canye-zdm/dsh-serial#readme",
+  "bugs": {
+    "url": "https://github.com/Canye-zdm/dsh-serial/issues"
+  },
+  "files": [
+    "lib/",
+    "client/",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "serial",
+    "serialport",
+    "arduino",
+    "embedded",
+    "uart"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web"
+    }
+  },
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./client/client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "dependencies": {
+    "serialport": "^13.0.0"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "*",
+    "@deepseek-ai/dsh-typert-protocol": "*"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/cordis": {
+      "optional": true
+    },
+    "@deepseek-ai/dsh-tools": {
+      "optional": true
+    },
+    "@deepseek-ai/dsh-typert-protocol": {
+      "optional": true
+    }
+  }
+}
