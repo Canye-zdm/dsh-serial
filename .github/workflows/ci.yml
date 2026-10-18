@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: test (node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [20, 22]
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 准备 Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      # 这两个测试只依赖 Node 内置模块，因此无需 npm install。
+      # 如果将来 lib/ 引入第三方运行时依赖，请在此处补上 `npm ci` 步骤。
+      - name: Host 半 · 模拟加载测试
+        run: node tools/mock-load-test.mjs
+
+      - name: Browser 半 · 行为测试
+        run: node tools/client-load-test.mjs
+
+      - name: 硬件冒烟测试（CI 跳过）
+        run: |
+          echo "serial-smoke 需要真实串口设备，CI 环境无串口，已跳过。"
+          echo "本地验证请在插上开发板后执行：npm run test:smoke"
