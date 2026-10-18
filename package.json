@@ -1,11 +1,21 @@
 {
   "name": "dsh-serial",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "把电脑串口接进 dsh——让 AI 能看见 Arduino/STM32/ESP32 的运行时输出（悬浮球面板 + serial_list_ports / serial_read 两个工具）",
   "type": "module",
   "main": "lib/index.js",
   "license": "MIT",
   "author": "Canye-zdm",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "npm run test:host && npm run test:client",
+    "test:host": "node tools/mock-load-test.mjs",
+    "test:client": "node tools/client-load-test.mjs",
+    "test:smoke": "node tools/serial-smoke.mjs",
+    "test:all": "npm run test && npm run test:smoke"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/Canye-zdm/dsh-serial.git"
