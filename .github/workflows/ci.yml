@@ -31,9 +31,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
+          cache: npm
 
-      # 这两个测试只依赖 Node 内置模块，因此无需 npm install。
-      # 如果将来 lib/ 引入第三方运行时依赖，请在此处补上 `npm ci` 步骤。
+      # lib/service.js 懒加载 serialport，而测试断言 ok:true 依赖该库可用。
+      # 若跳过安装，跑的就不是"正常路径"而是"降级路径"，会误判为失败。
+      - name: 安装依赖
+        run: npm ci --no-audit --no-fund
+
       - name: Host 半 · 模拟加载测试
         run: node tools/mock-load-test.mjs
 
