@@ -1,0 +1,106 @@
+---
+name: 缺陷报告
+description: 面板连不上、AI 读不到数据、日志异常等问题
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢报告。**提交前请先做两件事：**
+
+        1. 搜索已有 Issue，确认不是重复
+        2. 按 README「验证」一节，从 Level 0 到 Level 3 逐层排查一次
+
+        Level 0（`node tools/serial-smoke.mjs`）能列出串口，说明系统层面没问题，问题大概率在插件层。
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 发生了什么
+      description: 一句话说清现象，不要只写「用不了」
+      placeholder: 点「连接」后提示 open failed，面板停在灰灯
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 你期望的结果
+      placeholder: 应当显示绿色状态灯并开始滚动日志
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      description: 越具体越好，包括你点的是哪个按钮、选的是哪个口
+      placeholder: |
+        1. 插上 CH340，设备管理器显示 COM4
+        2. 打开 dsh 桌面版，右下角出现串口悬浮球
+        3. 点开 → 选 COM4 → 波特率 9600 → 点「连接」
+        4. 面板提示打开失败，状态灯保持灰色
+    validations:
+      required: true
+
+  - type: input
+    id: dsh-version
+    attributes:
+      label: dsh 版本
+      description: 桌面版「关于」里可以看到
+      placeholder: 0.2.0
+    validations:
+      required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: 运行环境
+      options:
+        - Windows · 桌面版
+        - Windows · Web 版
+        - macOS · 桌面版
+        - macOS · Web 版
+        - Linux
+    validations:
+      required: true
+
+  - type: input
+    id: node-version
+    attributes:
+      label: Node.js 版本
+      description: 终端执行 `node -v` 的结果
+      placeholder: v22.22.2
+    validations:
+      required: true
+
+  - type: input
+    id: board
+    attributes:
+      label: 开发板与转串口芯片
+      description: 不知道芯片型号可以只写板子型号
+      placeholder: Arduino UNO + CH340
+    validations:
+      required: false
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 日志与报错
+      description: 面板日志、dsh 控制台输出、或 `node tools/serial-smoke.mjs` 的输出
+      render: shell
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: 确认项
+      options:
+        - label: 我已搜索过已有 Issue，确认不是重复
+          required: true
+        - label: 我已按 README「验证」一节逐层排查
+          required: true
+        - label: 我已升级到最新版本（0.1.7 及以上）再复现过
+          required: true
